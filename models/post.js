@@ -8,7 +8,7 @@ const crearPost = async (titulo, img, descripcion)=>{
         return result.rows;
 
     }catch(err){
-        throw new Error('Error al guardar el post: '+ err.message)
+        throw new Error(`Error al guardar el post: ${err.message}`)
     }
 };
 
@@ -19,7 +19,7 @@ const obtenerPosts = async()=>{
         return result.rows;
 
     }catch(err){
-        throw new Error('Problemas con base de datos: '+ err.message)
+        throw new Error(`Error al obtener los posts: ${err.message}`)
     }
 }
 
@@ -27,9 +27,9 @@ const actualizaPost = async(id)=>{
     try{
         const consulta = 'UPDATE posts SET likes = likes + 1 WHERE id = $1';
         const values = [id];
-        const result = await pool.query(consulta, values)
+        await pool.query(consulta, values)
     }catch(err){
-        throw new Error('Problam para actualizar post ' + err.message)
+        throw new Error(`Error al actualizar el post: ${err.message}`)
     }
 }
 
@@ -37,9 +37,9 @@ const eliminaPost = async(id)=>{
     try{
         const consulta = 'DELETE FROM posts WHERE id = $1';
         const values = [id];
-        const result = pool.query(consulta, values)
+        await pool.query(consulta, values)
     }catch(err){
-        throw new Error('Problema para eliminar Post ' + err.message)
+        throw new Error(`Error al eliminar el post: ${err.message}`)
     }
 }
 module.exports = {crearPost, obtenerPosts, actualizaPost, eliminaPost};
